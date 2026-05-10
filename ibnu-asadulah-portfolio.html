@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ibnu Asadulah — Junior Frontend Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #18181f;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0eff8;
+    --muted: #7a7a8f;
+    --accent: #7c6ef5;
+    --accent2: #3fe0b0;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* css navbar */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 2.5rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent2);
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* SECTIONS */
+  section { padding: 6rem 2.5rem; max-width: 1000px; margin: 0 auto; }
+
+ 
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 6rem;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent2);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .hero-name {
+    font-family: var(--sans);
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+  .hero-name .accent { color: var(--accent); }
+  .hero-title {
+    font-family: var(--mono);
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+  .hero-desc {
+    max-width: 500px;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--accent); color: #fff; border: none; }
+  .btn-primary:hover { background: #6a5ee0; }
+  .btn-outline { background: transparent; color: var(--text); border: 0.5px solid var(--border2); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-grid {
+    position: absolute; right: -60px; top: 50%; transform: translateY(-50%);
+    opacity: 0.06; pointer-events: none;
+    font-family: var(--mono); font-size: 11px; color: var(--accent);
+    line-height: 1.8; letter-spacing: 0.05em;
+  }
+
+  /* css section label */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent2);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+
+  /* css tentang saya */
+  #about { padding-top: 0; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+    line-height: 1.85;
+    font-size: 0.95rem;
+  }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .stat-card {
+    background: var(--surface2);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); font-family: var(--mono); letter-spacing: 0.05em; }
+
+  /* css skill */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+  .skill-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.4rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .skill-icon { font-size: 1.4rem; margin-bottom: 0.6rem; display: block; }
+  .skill-name { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+  .skill-desc { font-size: 12px; color: var(--muted); }
+  .skill-bar-wrap { margin-top: 0.7rem; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .skill-bar { height: 100%; background: var(--accent2); border-radius: 2px; }
+
+  /* css projekann */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-thumb {
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .thumb-1 { background: linear-gradient(135deg, #1a1025 0%, #0d1a2e 100%); }
+  .thumb-2 { background: linear-gradient(135deg, #0d1a1a 0%, #1a1025 100%); }
+  .thumb-3 { background: linear-gradient(135deg, #1a1a0d 0%, #0d1a25 100%); }
+  .thumb-label {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    opacity: 0.12;
+    color: var(--accent);
+    letter-spacing: -0.04em;
+  }
+  .project-body { padding: 1.25rem 1.4rem; }
+  .project-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    border: 0.5px solid rgba(63,224,176,0.3);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-bottom: 0.7rem;
+  }
+  .project-name { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+  .project-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+  .project-links { display: flex; gap: 0.8rem; }
+  .project-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  .project-link:hover { color: var(--accent); }
+
+  /* CONTACT */
+  #contact { text-align: center; }
+  .contact-wrap {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 3.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .contact-wrap p { color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.8; }
+  .contact-email {
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    color: var(--accent2);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 2rem;
+    transition: opacity 0.2s;
+  }
+  .contact-email:hover { opacity: 0.7; }
+  .social-links { display: flex; gap: 1.2rem; justify-content: center; margin-top: 1.5rem; }
+  .social-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .social-link:hover { color: var(--text); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 0.5px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .divider { height: 0.5px; background: var(--border); max-width: 1000px; margin: 0 auto; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+  .hero-name { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-title { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-desc { animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-cta { animation: fadeUp 0.6s 0.4s ease both; }
+
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.2rem; }
+    section { padding: 4rem 1.2rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .hero-grid { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">ibnu.dev</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid">
+    &lt;html&gt;<br>  &lt;head&gt;<br>    &lt;meta charset=<br>    "UTF-8"/&gt;<br>  &lt;/head&gt;<br>  &lt;body&gt;<br>    &lt;div id="app"&gt;<br>    &lt;/div&gt;<br>  &lt;/body&gt;<br>&lt;/html&gt;
+  </div>
+  <p class="hero-eyebrow">// beginner frontend developer</p>
+  <h1 class="hero-name">Ibnu<br><span class="accent">Asadulah.</span></h1>
+  <p class="hero-title">Building interfaces that feel alive.</p>
+  <p class="hero-desc">i create thoughtful, user-centered digital experiences.</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View My Work</a>
+    <a href="#contact" class="btn btn-outline">Get In Touch</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">// 01 — about</p>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Hi! I'm Ibnu Asadulah, a frontend developer passionate about creating clean, functional, and beautiful web interfaces. I love the intersection of design and engineering.</p>
+      <p>I specialize in HTML, JavaScript, CSS, and I learn a little bit about React. Whether it's building from scratch or refining an existing product, I bring care and precision to every line of code.</p>
+      <p>When I'm not coding, I'm exploring new design trends, contributing to open source, or learning the latest frontend tools.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Years experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Projects built</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Happy people</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Coffee consumed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">// 02 — skills</p>
+  <h2 class="section-title">What I Work With</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <span class="skill-icon">⚛</span>
+      <div class="skill-name">React</div>
+      <div class="skill-desc">Hooks, Context, performance optimization</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">🟨</span>
+      <div class="skill-name">JavaScript</div>
+      <div class="skill-desc">ES6+, async/await, DOM manipulation</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">🎨</span>
+      <div class="skill-name">CSS / Tailwind</div>
+      <div class="skill-desc">Animations, Grid, Flexbox, responsive</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">🔷</span>
+      <div class="skill-name">TypeScript</div>
+      <div class="skill-desc">Typed components, interfaces, generics</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">▲</span>
+      <div class="skill-name">Next.js</div>
+      <div class="skill-desc">SSR, SSG, App Router, API routes</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">🐙</span>
+      <div class="skill-name">Git & GitHub</div>
+      <div class="skill-desc">Version control, PRs, CI/CD workflows</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">// 03 — projects</p>
+  <h2 class="section-title">Selected Work</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-thumb thumb-1">
+        <span class="thumb-label">01</span>
+      </div>
+      <div class="project-body">
+        <span class="project-tag">React · Tailwind</span>
+        <div class="project-name">Dashboard UI</div>
+        <p class="project-desc">A clean analytics dashboard with real-time data visualization, dark mode, and responsive layout.</p>
+        <div class="project-links">
+          <a href="#" class="project-link">Live Demo →</a>
+          <a href="https://github.com/ibnuasadulah" class="project-link">GitHub →</a>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb thumb-2">
+        <span class="thumb-label">02</span>
+      </div>
+      <div class="project-body">
+        <span class="project-tag">Next.js · TypeScript</span>
+        <div class="project-name">E-Commerce Store</div>
+        <p class="project-desc">Full-featured online store with cart, product filtering, and seamless checkout flow.</p>
+        <div class="project-links">
+          <a href="#" class="project-link">Live Demo →</a>
+          <a href="https://github.com/ibnuasadulah" class="project-link">GitHub →</a>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb thumb-3">
+        <span class="thumb-label">03</span>
+      </div>
+      <div class="project-body">
+        <span class="project-tag">JavaScript · CSS</span>
+        <div class="project-name">Portfolio Template</div>
+        <p class="project-desc">A minimal, fast-loading personal portfolio with smooth scroll animations and accessible markup.</p>
+        <div class="project-links">
+          <a href="#" class="project-link">Live Demo →</a>
+          <a href="https://github.com/ibnuasadulah" class="project-link">GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label" style="text-align:center">// 04 — contact</p>
+  <h2 class="section-title" style="text-align:center">Let's Work Together</h2>
+  <div class="contact-wrap">
+    <p>Got a project in mind? I'm open to freelance work, full-time roles, and collaborations. Drop me an email and let's build something great.</p>
+    <a href="mailto:ibnuasadulah01@gmail.com" class="contact-email">ibnuasadulah01@gmail.com</a>
+    <a href="mailto:ibnuasadulah01@gmail.com" class="btn btn-primary">Send a Message</a>
+    <div class="social-links">
+      <a href="https://github.com/ibnuasadulah" target="_blank" class="social-link">GitHub</a>
+      <a href="https://www.linkedin.com/in/ibnu-asadulah-7b1520292/" target="_blank" class="social-link">LinkedIn</a>
+      <a href="https://www.instagram.com/ibnuasd_" target="_blank" class="social-link">Instagram</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Ibnu Asadulah — My Portfolio &amp; </span>
+</footer>
+
+</body>
+</html>
