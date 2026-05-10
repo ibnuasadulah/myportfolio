@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — GameVault</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Midtrans Snap.js -->
+  <script src="https://app.sandbox.midtrans.com/snap/snap.js"
+          data-client-key="YOUR_MIDTRANS_CLIENT_KEY"></script>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-brand">
+      <span class="brand-icon">⬡</span>
+      <span class="brand-text">Game<strong>Vault</strong></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Beranda</a></li>
+      <li><a href="products.php">Produk</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.php" class="btn-cart"><span class="cart-icon">🛒</span><span class="cart-count" id="cartCount">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="container checkout-grid">
+
+    <!-- Kiri: Form Data -->
+    <div>
+      <div class="checkout-card">
+        <h3>Data Pembeli</h3>
+        <div class="form-group">
+          <label>Nama Lengkap</label>
+          <input class="form-control" type="text" id="buyerName" placeholder="Nama kamu">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input class="form-control" type="email" id="buyerEmail" placeholder="email@kamu.com">
+        </div>
+        <div class="form-group">
+          <label>No. WhatsApp</label>
+          <input class="form-control" type="tel" id="buyerPhone" placeholder="08xxxxxxxxxx">
+        </div>
+      </div>
+
+      <div class="checkout-card">
+        <h3>Data Akun Game</h3>
+        <div class="form-group">
+          <label>ID Akun Game</label>
+          <input class="form-control" type="text" id="gameUserId" placeholder="Contoh: 123456789">
+        </div>
+        <div class="form-group">
+          <label>Server / Zona (jika ada)</label>
+          <input class="form-control" type="text" id="gameServer" placeholder="Contoh: (7289) atau ID-Server">
+        </div>
+      </div>
+
+      <div class="checkout-card">
+        <h3>Metode Pembayaran</h3>
+        <div class="payment-options" id="paymentOptions">
+          <label class="payment-option selected" onclick="selectPayment(this, 'shopeepay')">
+            <input type="radio" name="payment" value="shopeepay" checked>
+            <div>
+              <div class="payment-option-name">🛍️ ShopeePay</div>
+              <div class="payment-option-desc">Bayar via ShopeePay — cashback tersedia</div>
+            </div>
+          </label>
+          <label class="payment-option" onclick="selectPayment(this, 'qris')">
+            <input type="radio" name="payment" value="qris">
+            <div>
+              <div class="payment-option-name">📱 QRIS</div>
+              <div class="payment-option-desc">Scan QR dari semua e-wallet (GoPay, OVO, DANA, dll)</div>
+            </div>
+          </label>
+          <label class="payment-option" onclick="selectPayment(this, 'bca')">
+            <input type="radio" name="payment" value="bca">
+            <div>
+              <div class="payment-option-name">🏦 Transfer BCA</div>
+              <div class="payment-option-desc">Virtual Account BCA</div>
+            </div>
+          </label>
+          <label class="payment-option" onclick="selectPayment(this, 'mandiri')">
+            <input type="radio" name="payment" value="mandiri">
+            <div>
+              <div class="payment-option-name">🏦 Transfer Mandiri</div>
+              <div class="payment-option-desc">Virtual Account Mandiri</div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kanan: Ringkasan Order -->
+    <div>
+      <div class="checkout-card" style="position:sticky;top:80px">
+        <h3>Ringkasan Pesanan</h3>
+        <div id="orderItemsList"></div>
+        <div class="order-total">
+          <span>Total Pembayaran</span>
+          <span class="order-total-price" id="orderTotal">Rp 0</span>
+        </div>
+        <button class="btn-primary btn-buy" id="btnPay" onclick="processCheckout()">
+          Bayar Sekarang 🚀
+        </button>
+        <p style="text-align:center;font-size:0.78rem;color:var(--text-muted);margin-top:12px">
+          🔒 Transaksi aman diproses oleh Midtrans
+        </p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div class="toast-container"></div>
+
+<script src="assets/js/main.js"></script>
+<script>
+  let selectedPayment = 'shopeepay';
+
+  function selectPayment(el, method) {
+    document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedPayment = method;
+  }
+
+  // Render cart items
+  function renderCart() {
+    const cart = Cart.get();
+    const list = document.getElementById('orderItemsList');
+    if (!cart.length) {
+      list.innerHTML = '<p style="color:var(--text-muted);text-align:center">Keranjang kosong</p>';
+      return;
+    }
+    list.innerHTML = cart.map(i => `
+      <div class="order-summary-item">
+        <span>${i.name} × ${i.qty}</span>
+        <span>${formatRupiah(i.price * i.qty)}</span>
+      </div>
+    `).join('');
+    document.getElementById('orderTotal').textContent = formatRupiah(Cart.total());
+  }
+  renderCart();
+
+  async function processCheckout() {
+    const cart = Cart.get();
+    if (!cart.length) return showToast('Keranjang kosong!', 'error');
+
+    const name  = document.getElementById('buyerName').value.trim();
+    const email = document.getElementById('buyerEmail').value.trim();
+    const phone = document.getElementById('buyerPhone').value.trim();
+    const gameUserId = document.getElementById('gameUserId').value.trim();
+    const gameServer = document.getElementById('gameServer').value.trim();
+
+    if (!name || !email || !gameUserId) {
+      return showToast('Lengkapi data nama, email, dan ID akun game!', 'error');
+    }
+
+    const btn = document.getElementById('btnPay');
+    btn.disabled = true;
+    btn.textContent = 'Memproses...';
+
+    try {
+      const res = await fetch('api/checkout.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cart.map(i => ({ product_id: i.id, qty: i.qty })),
+          name, email, phone,
+          game_user_id: gameUserId,
+          game_server:  gameServer,
+          payment_method: selectedPayment,
+        }),
+      });
+      const data = await res.json();
+
+      if (!res.ok || data.error) throw new Error(data.error || 'Checkout gagal');
+
+      // Gunakan Midtrans Snap jika token tersedia
+      if (data.payment?.token) {
+        snap.pay(data.payment.token, {
+          onSuccess(result) {
+            localStorage.removeItem('gv_cart');
+            location.href = `order-success.php?code=${data.order_code}`;
+          },
+          onPending(result) {
+            location.href = `order-pending.php?code=${data.order_code}`;
+          },
+          onError(result) {
+            showToast('Pembayaran gagal. Silakan coba lagi.', 'error');
+            btn.disabled = false;
+            btn.textContent = 'Bayar Sekarang 🚀';
+          },
+        });
+      } else if (data.payment?.actions) {
+        // Redirect ke URL payment (ShopeePay deeplink)
+        const action = data.payment.actions.find(a => a.name === 'deeplink-redirect')
+                    || data.payment.actions[0];
+        if (action) window.location.href = action.url;
+      } else {
+        showToast(data.payment?.error || 'Terjadi kesalahan pada payment gateway.', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Bayar Sekarang 🚀';
+      }
+    } catch (err) {
+      showToast(err.message, 'error');
+      btn.disabled = false;
+      btn.textContent = 'Bayar Sekarang 🚀';
+    }
+  }
+</script>
+</body>
+</html>

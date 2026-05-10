@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameVault — Marketplace Item & Voucher Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-brand">
+      <span class="brand-icon">⬡</span>
+      <span class="brand-text">Game<strong>Vault</strong></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Beranda</a></li>
+      <li><a href="products.php">Produk</a></li>
+      <li><a href="topup.php">Top Up</a></li>
+      <li><a href="orders.php">Pesanan</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.php" class="btn-cart"><span class="cart-icon">🛒</span><span class="cart-count" id="cartCount">0</span></a>
+      <a href="login.php" class="btn-login">Masuk</a>
+      <a href="register.php" class="btn-register">Daftar</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-glow glow-1"></div>
+    <div class="hero-glow glow-2"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">🔥 Marketplace Game Terpercaya #1 Indonesia</div>
+    <h1 class="hero-title">Item & Voucher Game<br><span class="gradient-text">Harga Terbaik</span></h1>
+    <p class="hero-desc">Top up diamond, beli voucher, dan item game favorit kamu dengan aman, cepat, dan murah. Pembayaran via ShopeePay & QRIS.</p>
+    <div class="hero-actions">
+      <a href="products.php" class="btn-primary">Belanja Sekarang</a>
+      <a href="#categories" class="btn-outline">Lihat Kategori</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">50K+</span><span class="stat-label">Transaksi</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">200+</span><span class="stat-label">Produk Game</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">4.9★</span><span class="stat-label">Rating</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="floating-card card-1">
+      <img src="assets/img/mlbb.png" onerror="this.src='https://placehold.co/60x60/ff6b35/fff?text=ML'" alt="ML">
+      <div><strong>Mobile Legends</strong><br><small>Diamond 100+</small></div>
+    </div>
+    <div class="floating-card card-2">
+      <img src="assets/img/ff.png" onerror="this.src='https://placehold.co/60x60/00d4aa/fff?text=FF'" alt="FF">
+      <div><strong>Free Fire</strong><br><small>Diamond 100+</small></div>
+    </div>
+    <div class="floating-card card-3">
+      <img src="assets/img/genshin.png" onerror="this.src='https://placehold.co/60x60/e8c547/222?text=GI'" alt="GI">
+      <div><strong>Genshin Impact</strong><br><small>Genesis Crystal</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="container">
+    <div class="section-header">
+      <h2>Kategori Game</h2>
+      <p>Temukan item dan voucher untuk game favoritmu</p>
+    </div>
+    <div class="category-grid">
+      <a href="products.php?cat=mobile-legends" class="cat-card">
+        <div class="cat-icon" style="background:#ff6b35">🗡️</div>
+        <span>Mobile Legends</span>
+        <small>Diamond, Skin, Hero</small>
+      </a>
+      <a href="products.php?cat=free-fire" class="cat-card">
+        <div class="cat-icon" style="background:#00d4aa">🔫</div>
+        <span>Free Fire</span>
+        <small>Diamond, Bundle, Pet</small>
+      </a>
+      <a href="products.php?cat=pubg" class="cat-card">
+        <div class="cat-icon" style="background:#e8c547">🪖</div>
+        <span>PUBG Mobile</span>
+        <small>UC, Royal Pass, Set</small>
+      </a>
+      <a href="products.php?cat=genshin" class="cat-card">
+        <div class="cat-icon" style="background:#7c6aff">✨</div>
+        <span>Genshin Impact</span>
+        <small>Genesis Crystal, Primogem</small>
+      </a>
+      <a href="products.php?cat=valorant" class="cat-card">
+        <div class="cat-icon" style="background:#ff4655">🎯</div>
+        <span>Valorant</span>
+        <small>VP, Battle Pass, Skin</small>
+      </a>
+      <a href="products.php?cat=voucher" class="cat-card">
+        <div class="cat-icon" style="background:#00b4d8">🎟️</div>
+        <span>Voucher Game</span>
+        <small>Google Play, Steam, dll</small>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUK TERLARIS -->
+<section class="products-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Produk Terlaris</h2>
+      <a href="products.php" class="see-all">Lihat Semua →</a>
+    </div>
+    <div class="products-grid" id="productsGrid">
+      <!-- Diisi PHP/JS -->
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT METHODS -->
+<section class="payment-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Metode Pembayaran</h2>
+      <p>Transaksi aman dengan berbagai pilihan pembayaran</p>
+    </div>
+    <div class="payment-grid">
+      <div class="pay-card featured">
+        <div class="pay-badge">Rekomendasi</div>
+        <img src="https://placehold.co/120x50/ee4d2d/fff?text=ShopeePay" alt="ShopeePay">
+        <span>ShopeePay</span>
+        <small>Cashback hingga 30%</small>
+      </div>
+      <div class="pay-card">
+        <img src="https://placehold.co/120x50/00aa5b/fff?text=QRIS" alt="QRIS">
+        <span>QRIS</span>
+        <small>Semua e-wallet</small>
+      </div>
+      <div class="pay-card">
+        <img src="https://placehold.co/120x50/003087/fff?text=Transfer" alt="Bank Transfer">
+        <span>Transfer Bank</span>
+        <small>BCA, Mandiri, BNI</small>
+      </div>
+      <div class="pay-card">
+        <img src="https://placehold.co/120x50/1d9bf0/fff?text=Dana" alt="DANA">
+        <span>DANA</span>
+        <small>Instan & mudah</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">⚡</div>
+        <h3>Proses Instan</h3>
+        <p>Item langsung masuk ke akun game kamu dalam hitungan menit setelah pembayaran dikonfirmasi.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔒</div>
+        <h3>100% Aman</h3>
+        <p>Transaksi diproteksi sistem keamanan berlapis. Data kamu aman bersama kami.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💰</div>
+        <h3>Harga Termurah</h3>
+        <p>Harga kompetitif dan transparan. Tidak ada biaya tersembunyi.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🎧</div>
+        <h3>CS 24/7</h3>
+        <p>Tim customer service siap membantu kamu kapan saja via WhatsApp dan Live Chat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-brand" style="margin-bottom:1rem">
+          <span class="brand-icon">⬡</span>
+          <span class="brand-text">Game<strong>Vault</strong></span>
+        </div>
+        <p>Marketplace item & voucher game terpercaya di Indonesia.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navigasi</h4>
+        <ul>
+          <li><a href="products.php">Semua Produk</a></li>
+          <li><a href="topup.php">Top Up</a></li>
+          <li><a href="orders.php">Cek Pesanan</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Bantuan</h4>
+        <ul>
+          <li><a href="faq.php">FAQ</a></li>
+          <li><a href="contact.php">Kontak Kami</a></li>
+          <li><a href="tos.php">Syarat & Ketentuan</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Hubungi Kami</h4>
+        <p>📱 WhatsApp: <a href="https://wa.me/6281234567890">+62 812-3456-7890</a></p>
+        <p>📧 Email: support@gamevault.id</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 GameVault. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
